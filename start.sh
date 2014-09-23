@@ -51,8 +51,8 @@ if [ ! -f /usr/share/nginx/www/wp-config.php ]; then
   mysql -uroot -p$MYSQL_PASSWORD -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '$MYSQL_PASSWORD' WITH GRANT OPTION; FLUSH PRIVILEGES;"
   mysql -uroot -p$MYSQL_PASSWORD -e "CREATE DATABASE wordpress; GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'localhost' IDENTIFIED BY '$WORDPRESS_PASSWORD'; FLUSH PRIVILEGES;"
   mysql -uroot -p$MYSQL_PASSWORD wordpress < /wp-data/wp.sql
-  su - www-data -c 'cd /usr/share/nginx/www/;wp option update home http://master.pool.dev'
-  su - www-data -c 'cd /usr/share/nginx/www/;wp option update siteurl http://master.pool.dev'
+  su - www-data -c 'cd /usr/share/nginx/www/;wp option update home http://theme1.pool.dev'
+  su - www-data -c 'cd /usr/share/nginx/www/;wp option update siteurl http://theme1.pool.dev'
   su - www-data -c 'cd /usr/share/nginx/www/;wp plugin install remove-query-strings-from-static-resources --activate'
   su - www-data -c 'cd /usr/share/nginx/www/;wp theme install twentytwelve --activate'
   killall mysqld
