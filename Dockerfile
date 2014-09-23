@@ -53,6 +53,8 @@ RUN curl -L https://raw.github.com/wp-cli/builds/gh-pages/phar/wp-cli.phar > wp-
     chmod +x wp-cli.phar;\
     mv wp-cli.phar /usr/bin/wp
 
+RUN usermod -s /bin/bash www-data
+
 # Wordpress Initialization and Startup Script
 ADD ./start.sh /start.sh
 RUN chmod 755 /start.sh

@@ -31,19 +31,19 @@ if [ ! -f /usr/share/nginx/www/wp-config.php ]; then
   chown -R www-data:www-data /usr/share/nginx/www/wp-content/plugins/nginx-helper
 
   # Activate nginx plugin and set up pretty permalink structure once logged in
-  cat << ENDL >> /usr/share/nginx/www/wp-config.php
-\$plugins = get_option( 'active_plugins' );
-if ( count( \$plugins ) === 0 ) {
-  require_once(ABSPATH .'/wp-admin/includes/plugin.php');
-  \$wp_rewrite->set_permalink_structure( '/%postname%/' );
-  \$pluginsToActivate = array( 'nginx-helper/nginx-helper.php' );
-  foreach ( \$pluginsToActivate as \$plugin ) {
-    if ( !in_array( \$plugin, \$plugins ) ) {
-      activate_plugin( '/usr/share/nginx/www/wp-content/plugins/' . \$plugin );
-    }
-  }
-}
-ENDL
+  #cat << ENDL >> /usr/share/nginx/www/wp-config.php
+#\$plugins = get_option( 'active_plugins' );
+#if ( count( \$plugins ) === 0 ) {
+  #require_once(ABSPATH .'/wp-admin/includes/plugin.php');
+  #\$wp_rewrite->set_permalink_structure( '/%postname%/' );
+  #\$pluginsToActivate = array( 'nginx-helper/nginx-helper.php' );
+  #foreach ( \$pluginsToActivate as \$plugin ) {
+    #if ( !in_array( \$plugin, \$plugins ) ) {
+      #activate_plugin( '/usr/share/nginx/www/wp-content/plugins/' . \$plugin );
+    #}
+  #}
+#}
+#ENDL
 
   chown www-data:www-data /usr/share/nginx/www/wp-config.php
 
@@ -51,6 +51,8 @@ ENDL
   mysql -uroot -p$MYSQL_PASSWORD -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '$MYSQL_PASSWORD' WITH GRANT OPTION; FLUSH PRIVILEGES;"
   mysql -uroot -p$MYSQL_PASSWORD -e "CREATE DATABASE wordpress; GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'localhost' IDENTIFIED BY '$WORDPRESS_PASSWORD'; FLUSH PRIVILEGES;"
   mysql -uroot -p$MYSQL_PASSWORD wordpress < /wp-data/wp.sql
+  su - www-data -c 'cd wordpress;wp option update home http://master.pool.dev'
+  su - www-data -c 'cd wordpress;wp option update siteurl http://master.pool.dev'
   killall mysqld
 fi
 
