@@ -49,9 +49,16 @@ RUN rm -rf /usr/share/nginx/www
 RUN mv /usr/share/nginx/wordpress /usr/share/nginx/www
 RUN chown -R www-data:www-data /usr/share/nginx/www
 
+RUN curl -L https://raw.github.com/wp-cli/builds/gh-pages/phar/wp-cli.phar > wp-cli.phar;\
+    chmod +x wp-cli.phar;\
+    mv wp-cli.phar /usr/bin/wp
+
 # Wordpress Initialization and Startup Script
 ADD ./start.sh /start.sh
 RUN chmod 755 /start.sh
+
+# add mysql dump
+ADD data wp-data
 
 # private expose
 EXPOSE 3306
