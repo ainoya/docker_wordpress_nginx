@@ -44,3 +44,8 @@ fi
 
 # start all the services
 /usr/local/bin/supervisord -n
+
+# stop myself after 5 minutes
+sleep 300 && pkill supervisord
+exit
+
