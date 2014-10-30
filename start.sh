@@ -44,4 +44,9 @@ if [ ! -f /usr/share/nginx/www/wp-config.php ]; then
 fi
 
 # start all the services
-/usr/local/bin/supervisord -n
+/usr/local/bin/supervisord -n &
+
+# stop self after 5 minutes
+sleep 300 && pkill supervisord
+exit
+
