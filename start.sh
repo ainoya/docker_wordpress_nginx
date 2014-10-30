@@ -39,6 +39,7 @@ if [ ! -f /usr/share/nginx/www/wp-config.php ]; then
   su - www-data -c "cd /usr/share/nginx/www/;wp option update home http://${POOL_HOSTNAME}"
   su - www-data -c "cd /usr/share/nginx/www/;wp option update siteurl http://${POOL_HOSTNAME}"
   su - www-data -c "cd /usr/share/nginx/www/;wp plugin install remove-query-strings-from-static-resources --activate"
+  su - www-data -c 'cd /usr/share/nginx/www/;wp theme install twentytwelve --activate'
   killall mysqld
 fi
 
