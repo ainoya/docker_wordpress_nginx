@@ -28,12 +28,7 @@ if [ ! -f /usr/share/nginx/www/wp-config.php ]; then
   /'NONCE_SALT'/s/put your unique phrase here/`pwgen -c -n -1 65`/" /usr/share/nginx/www/wp-config-sample.php > /usr/share/nginx/www/wp-config.php
 
   # make static link to relative path
-  sed "/That's all, stop editing!'/ {
-         h
-         r /make-relative.config
-         g
-         N
-     }" /usr/share/nginx/www/wp-config.php
+  sed -e "/That's all, stop editing!/r /make-relative.config" -e //N -i '' /usr/share/nginx/www/wp-config.php
 
   # Download nginx helper plugin
   curl -O `curl -i -s http://wordpress.org/plugins/nginx-helper/ | egrep -o "http://downloads.wordpress.org/plugin/[^']+"`
