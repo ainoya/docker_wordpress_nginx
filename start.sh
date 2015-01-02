@@ -27,6 +27,7 @@ if [ ! -f /usr/share/nginx/www/wp-config.php ]; then
   /'LOGGED_IN_SALT'/s/put your unique phrase here/`pwgen -c -n -1 65`/
   /'NONCE_SALT'/s/put your unique phrase here/`pwgen -c -n -1 65`/" /usr/share/nginx/www/wp-config-sample.php > /usr/share/nginx/www/wp-config.php
 
+  # make static link to relative path
   sed "/That's all, stop editing!'/ {
          h
          r /make-relative.config
