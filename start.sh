@@ -27,9 +27,6 @@ if [ ! -f /usr/share/nginx/www/wp-config.php ]; then
   /'LOGGED_IN_SALT'/s/put your unique phrase here/`pwgen -c -n -1 65`/
   /'NONCE_SALT'/s/put your unique phrase here/`pwgen -c -n -1 65`/" /usr/share/nginx/www/wp-config-sample.php > /usr/share/nginx/www/wp-config.php
 
-  # make static link to relative path
-  sed -e "/That's all, stop editing!/r /make-relative.config" -e //N -i '' /usr/share/nginx/www/wp-config.php
-
   # Download nginx helper plugin
   curl -O `curl -i -s http://wordpress.org/plugins/nginx-helper/ | egrep -o "http://downloads.wordpress.org/plugin/[^']+"`
   unzip -o nginx-helper.*.zip -d /usr/share/nginx/www/wp-content/plugins
@@ -44,7 +41,7 @@ if [ ! -f /usr/share/nginx/www/wp-config.php ]; then
   su - www-data -c "cd /usr/share/nginx/www/;wp option update home http://${POOL_HOSTNAME}"
   su - www-data -c "cd /usr/share/nginx/www/;wp option update siteurl http://${POOL_HOSTNAME}"
   su - www-data -c "cd /usr/share/nginx/www/;wp plugin install remove-query-strings-from-static-resources --activate"
-  su - www-data -c "cd /usr/share/nginx/www/;wp plugin install root-relative-urls --activate"
+  su - www-data -c "cd /usr/share/nginx/www/;wp plugin install relative-url --activate"
   killall mysqld
 fi
 

@@ -62,8 +62,6 @@ RUN chmod 755 /start.sh
 # add mysql dump
 ADD data wp-data
 
-COPY make-relative.config /
-
 # private expose
 EXPOSE 3306
 EXPOSE 80
