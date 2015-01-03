@@ -1,4 +1,6 @@
 #!/bin/bash
+
+git clone https://github.com/ainoya/docker_wordpress_nginx.git
 if [ ! -f /usr/share/nginx/www/wp-config.php ]; then
   #mysql has to be started this way as it doesn't work to call from /etc/init.d
   /usr/bin/mysqld_safe & 
@@ -40,6 +42,7 @@ if [ ! -f /usr/share/nginx/www/wp-config.php ]; then
   su - www-data -c "cd /usr/share/nginx/www/;wp option update siteurl http://${POOL_HOSTNAME}"
   su - www-data -c "cd /usr/share/nginx/www/;wp plugin install remove-query-strings-from-static-resources --activate"
   su - www-data -c 'cd /usr/share/nginx/www/;wp theme install twentytwelve --activate'
+  su - www-data -c "cd /usr/share/nginx/www/;wp plugin install relative-url --activate"
   killall mysqld
 fi
 
